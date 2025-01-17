@@ -18,7 +18,7 @@ public class promptController : MonoBehaviour
             transform.parent.GetChild(transform.childCount + 1).transform.GetComponent<Transform>()
         );
         LoadingScreen = transform
-            .parent.GetChild(transform.childCount + 1)
+            .parent.GetChild(transform.parent.childCount - 2)
             .transform.GetComponent<Transform>();
     }
 
@@ -30,6 +30,28 @@ public class promptController : MonoBehaviour
         StartCoroutine(LoadAsyncScene(level.ToString()));
     }
 
+    public void RedirectToLevelString(string level)
+    {
+        StartCoroutine(LoadAsyncSceneString(level));
+    }
+
+    IEnumerator LoadAsyncSceneString(string level)
+    {
+        LoadingScreen.gameObject.SetActive(true);
+        yield return new WaitForSeconds(2.3f);
+        // The Application loads the Scene in the background as the current Scene runs.
+        // This is particularly good for creating loading screens.
+        // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
+        // a sceneBuildIndex of 1 as shown in Build Settings.
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(level);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
     IEnumerator LoadAsyncScene(string level)
     {
         LoadingScreen.gameObject.SetActive(true);
@@ -46,6 +68,31 @@ public class promptController : MonoBehaviour
         {
             yield return null;
         }
+    }
+    public void ChooseCustomLevel(string level)
+    {
+        //content
+
+
+        transform
+            .GetChild(1)
+            .transform.GetChild(0)
+            .transform.GetChild(0)
+            .transform.GetChild(0)
+            .GetComponent<TextMeshProUGUI>()
+            .text = "Enter" + " " + level;
+
+        transform
+            .GetChild(1)
+            .transform.GetChild(1)
+            .transform.GetChild(0)
+            .transform.GetChild(1)
+            .GetComponent<Button>()
+            .onClick.AddListener(() => RedirectToLevelString(level));
+
+        //display prompt
+
+        transform.gameObject.SetActive(true);
     }
 
     public void ChoosingLevel(string message)

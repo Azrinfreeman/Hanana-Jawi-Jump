@@ -34,12 +34,28 @@ public class PathController : MonoBehaviour
     [Header("Time Remaining Transform")]
     public Transform timeToReach;
 
+
+    public static PathController instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        DisableAllCharacter();
+        transform.GetChild(PlayerPrefs.GetInt("CurrentCharacterNum")).gameObject.SetActive(true);
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+            {
+                anim = transform.GetChild(i).GetComponent<Animator>();
+            }
+        }
+
         for (int i = 0; i < transform.childCount; i++)
         {
             TransformAnimList.Add(transform.GetChild(i).GetComponent<Transform>());
@@ -48,15 +64,25 @@ public class PathController : MonoBehaviour
         //transform.position = Vector3.MoveTowards(transform.position, Points[pointIndex].transform.position, moveSpeed *Time.deltaTime);
     }
 
-    public void SetFirstChildToLast()
+    void DisableAllCharacter()
     {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+    public void SetFirstChildToLast(int listNum)
+    {
+        DisableAllCharacter();
         //disable first child and set to the very last child
         transform.GetChild(0).gameObject.SetActive(false);
-        transform.GetChild(0).SetAsLastSibling();
-        anim = transform.GetChild(0).GetComponent<Animator>();
+        //transform.GetChild(0).SetAsLastSibling();
+        //anim = transform.GetChild(0).GetComponent<Animator>();
 
         //enable first child
-        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(listNum).gameObject.SetActive(true);
+
+        anim = transform.GetChild(listNum).GetComponent<Animator>();
     }
 
     IEnumerator delayStartCode()
@@ -80,7 +106,7 @@ public class PathController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SetFirstChildToLast();
+            //  SetFirstChildToLast();
         }
         if (!GameController.instance.gameStart)
         {

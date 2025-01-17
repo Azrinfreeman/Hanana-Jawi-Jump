@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UI;
 
 public class TransformController : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class TransformController : MonoBehaviour
     {
         public string nama;
         public int score;
+
+        public string id_ingame;
     }
 
     [System.Serializable]
@@ -52,7 +55,7 @@ public class TransformController : MonoBehaviour
         children = listClones.Count;
 
 
-        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(0, 200 * listClones.Count);
+        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(778f, 150 * listClones.Count);
     }
 
     private void OnDisable()
@@ -79,7 +82,7 @@ public class TransformController : MonoBehaviour
         children = listClones.Count;
 
 
-        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(745.4527f, 250 * listClones.Count);
+        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(778f, 150 * listClones.Count);
         if (!isRank)
         {
             AddPrefab();
@@ -137,6 +140,11 @@ public class TransformController : MonoBehaviour
                     //                  Debug.Log(rankings.ranking[i].nama);
                     //score
                     //                Debug.Log(rankings.ranking[i].score.ToString());
+                    Debug.Log(rankings.ranking[i].id_ingame);
+                    if (rankings.ranking[i].nama.Equals(PlayerPrefs.GetString("CurrentPlayer_")) && rankings.ranking[i].id_ingame.Equals(PlayerPrefs.GetString("CurrentPlayerid_")))
+                    {
+                        listClones[i].transform.GetChild(0).GetComponent<Image>().color = new Color32(144, 0, 255, 255);
+                    }
                     listClones[i].transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = l.ToString() + ". ";
                     listClones[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = rankings.ranking[i].nama;
                     listClones[i].transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = rankings.ranking[i].score.ToString();

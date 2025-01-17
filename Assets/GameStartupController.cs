@@ -40,6 +40,7 @@ public class GameStartupController : MonoBehaviour
             }
 
             form.AddField("PlayerName", PlayerPrefs.GetString("CurrentPlayer_"));
+            form.AddField("Playerid", PlayerPrefs.GetString("CurrentPlayerid_"));
             form.AddField("totalMark", PlayerPrefs.GetInt("RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_")));
             form.AddField("deviceName", SystemInfo.deviceName);
 
@@ -88,17 +89,19 @@ public class GameStartupController : MonoBehaviour
     }
 
 
-    public void SaveNewPlayerName(string name)
+    public void SaveNewPlayerName(string name, string id)
     {
         if (PlayerPrefs.GetInt("PlayerTotal") == 0)
         {
 
             PlayerPrefs.SetString("Player_0", name);
+            PlayerPrefs.SetString("Playerid_0", id);
             PlayerPrefs.SetInt("PlayerTotal", PlayerPrefs.GetInt("PlayerTotal") + 1);
         }
         else
         {
             PlayerPrefs.SetString("Player_" + PlayerPrefs.GetInt("PlayerTotal"), name);
+            PlayerPrefs.SetString("Playerid_" + PlayerPrefs.GetInt("PlayerTotal"), id);
             PlayerPrefs.SetInt("PlayerTotal", PlayerPrefs.GetInt("PlayerTotal") + 1);
 
         }
@@ -109,9 +112,10 @@ public class GameStartupController : MonoBehaviour
         return PlayerPrefs.GetString("Player_");
     }
 
-    public void SetAsCurrentPlayer(string name)
+    public void SetAsCurrentPlayer(string name, string id)
     {
         PlayerPrefs.SetString("CurrentPlayer_", name);
+        PlayerPrefs.SetString("CurrentPlayerid_", id);
         PlayerPrefs.SetInt("CurrentPlayerNo_", PlayerPrefs.GetInt("PlayerTotal") - 1);
     }
 

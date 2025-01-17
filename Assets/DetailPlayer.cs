@@ -43,7 +43,7 @@ public class DetailPlayer : MonoBehaviour
         {
             if (no == PlayerPrefs.GetInt("CurrentPlayerNo_"))
             {
-
+                transform.GetChild(0).GetComponent<Image>().color = new Color32(144, 0, 255, 255);
                 button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "DELETE";
                 button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = Color.yellow;
                 button.onClick.AddListener(() => DisplayDelete());
