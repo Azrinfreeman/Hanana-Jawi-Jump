@@ -11,7 +11,7 @@ public class CharacterInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        names = GetComponent<Transform>().name;
     }
 
     // Update is called once per frame
