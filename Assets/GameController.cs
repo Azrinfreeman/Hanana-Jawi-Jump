@@ -58,8 +58,10 @@ public class GameController : MonoBehaviour
     public List<Button> ansButton;
 
     private Button soundBtn;
+
     [Header("TimeToAnswer")]
     public Transform Timing;
+
     [Header("references")]
     public PathController pathController;
     public bool isDoneAnswer;
@@ -92,7 +94,6 @@ public class GameController : MonoBehaviour
                 .enabled = false;
         }
 
-
         //collect stars and timer
         if (level < 4)
         {
@@ -111,14 +112,7 @@ public class GameController : MonoBehaviour
             {
                 CollectionController.instance.addStars(3);
             }
-
         }
-
-
-
-
-
-
 
         //Collect the round count
 
@@ -181,6 +175,10 @@ public class GameController : MonoBehaviour
             {
                 CollectionController.instance.addStars(10);
             }
+
+            //Collect the round count
+            Debug.Log("add round");
+            CollectionController.instance.addRounds(1);
 
             //Destroy(gameObject);
             //pathController.timeToReach.gameObject.SetActive(false);
@@ -673,11 +671,9 @@ public class GameController : MonoBehaviour
                                 chooseRandom = rnd.Next(
                                     0,
                                     QuestionController.instance.questionsList.Count
-                                    );
-
+                                );
                             }
                             randomAnswer.Add(chooseRandom);
-
                         }
                         else
                         {
