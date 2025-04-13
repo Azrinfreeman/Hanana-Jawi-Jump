@@ -14468,6 +14468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacbebab7b017624bb90ab14f5c02b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userCollection: []
   childrenContentPrefab: {fileID: 8151031105373485733, guid: ad41b86bd8a52f14c8341c9fe89dfb6e,
     type: 3}
   contentHeight: {fileID: 0}
@@ -15352,7 +15353,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: edc9e31980ac22d42aacf010589012c7, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 0.023
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -17817,6 +17818,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cacbebab7b017624bb90ab14f5c02b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userCollection: []
   childrenContentPrefab: {fileID: 116862831280877105, guid: a9c5e982939ae2e4dac0fbeea61ebfc6,
     type: 3}
   contentHeight: {fileID: 0}
@@ -19465,7 +19467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &542078914
 RectTransform:
   m_ObjectHideFlags: 0

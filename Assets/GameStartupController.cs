@@ -17,6 +17,10 @@ public class GameStartupController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        string s1 = "read the docs";
+        string s2 = s1.Substring(s1.Length - 1); // s2==“docs”;
+
+        Debug.Log(s2);
         ApplyScoreAgain();
     }
 

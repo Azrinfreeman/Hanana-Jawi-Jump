@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -8,12 +9,15 @@ using UnityEngine.UI;
 public class TransformController : MonoBehaviour
 {
     public static TransformController instance;
+    public List<string> userCollection;
 
     public Transform childrenContentPrefab;
+
     private void Awake()
     {
         instance = this;
     }
+
     public Transform contentHeight;
 
     public int children;
@@ -39,14 +43,12 @@ public class TransformController : MonoBehaviour
     {
         public Ranking[] ranking;
     }
+
     // Start is called before the first frame update
     void Start()
     {
         children = 0;
         contentHeight = transform;
-
-
-
     }
 
     // Update is called once per frame
@@ -54,8 +56,10 @@ public class TransformController : MonoBehaviour
     {
         children = listClones.Count;
 
-
-        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(778f, 150 * listClones.Count);
+        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(
+            778f,
+            150 * listClones.Count
+        );
     }
 
     private void OnDisable()
@@ -63,7 +67,6 @@ public class TransformController : MonoBehaviour
         children = 0;
         if (isRank)
         {
-
             for (int i = 0; i < listClones.Count; i++)
             {
                 //                Debug.Log("wr");
@@ -78,11 +81,12 @@ public class TransformController : MonoBehaviour
         children = 0;
         contentHeight = transform;
 
-
         children = listClones.Count;
 
-
-        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(778f, 150 * listClones.Count);
+        contentHeight.GetComponent<RectTransform>().sizeDelta = new Vector2(
+            778f,
+            150 * listClones.Count
+        );
         if (!isRank)
         {
             AddPrefab();
@@ -97,9 +101,9 @@ public class TransformController : MonoBehaviour
     {
         StartCoroutine(fetchRanking());
     }
+
     IEnumerator fetchRanking()
     {
-
         Debug.Log("fetchRanking");
         using (
             UnityWebRequest www = UnityWebRequest.Get(
@@ -122,7 +126,11 @@ public class TransformController : MonoBehaviour
                 rankings = JsonUtility.FromJson<RankingList>(www.downloadHandler.text);
                 for (int i = 0; i < rankings.ranking.Length; i++)
                 {
-                    Transform content = Instantiate(childrenContentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+                    Transform content = Instantiate(
+                        childrenContentPrefab,
+                        new Vector3(0, 0, 0),
+                        Quaternion.identity
+                    );
                     content.SetParent(transform);
                     content.localScale = new Vector3(1, 1, 1);
                     content.localPosition = new Vector3(0, 0, 0);
@@ -141,13 +149,31 @@ public class TransformController : MonoBehaviour
                     //score
                     //                Debug.Log(rankings.ranking[i].score.ToString());
                     Debug.Log(rankings.ranking[i].id_ingame);
-                    if (rankings.ranking[i].nama.Equals(PlayerPrefs.GetString("CurrentPlayer_")) && rankings.ranking[i].id_ingame.Equals(PlayerPrefs.GetString("CurrentPlayerid_")))
+                    if (
+                        rankings.ranking[i].nama.Equals(PlayerPrefs.GetString("CurrentPlayer_"))
+                        && rankings
+                            .ranking[i]
+                            .id_ingame.Equals(PlayerPrefs.GetString("CurrentPlayerid_"))
+                    )
                     {
-                        listClones[i].transform.GetChild(0).GetComponent<Image>().color = new Color32(144, 0, 255, 255);
+                        listClones[i].transform.GetChild(0).GetComponent<Image>().color =
+                            new Color32(144, 0, 255, 255);
                     }
-                    listClones[i].transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = l.ToString() + ". ";
-                    listClones[i].transform.GetChild(0).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = rankings.ranking[i].nama;
-                    listClones[i].transform.GetChild(0).transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = rankings.ranking[i].score.ToString();
+                    listClones[i]
+                        .transform.GetChild(0)
+                        .transform.GetChild(0)
+                        .GetComponent<TextMeshProUGUI>()
+                        .text = l.ToString() + ". ";
+                    listClones[i]
+                        .transform.GetChild(0)
+                        .transform.GetChild(1)
+                        .GetComponent<TextMeshProUGUI>()
+                        .text = rankings.ranking[i].nama;
+                    listClones[i]
+                        .transform.GetChild(0)
+                        .transform.GetChild(2)
+                        .GetComponent<TextMeshProUGUI>()
+                        .text = rankings.ranking[i].score.ToString();
                     l++;
                 }
             }
@@ -156,17 +182,43 @@ public class TransformController : MonoBehaviour
 
     public void AddPrefab()
     {
-        for (int i = 0; i < PlayerPrefs.GetInt("PlayerTotal"); i++)
+        userCollection.Clear();
+        for (int i = 0; i < 20; i++)
         {
-            Transform content = Instantiate(childrenContentPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-            content.SetParent(transform);
-            content.localScale = new Vector3(1, 1, 1);
-            content.localPosition = new Vector3(0, 0, 0);
-            int l = i + 1;
-            content.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = l.ToString();
-            listClones.Add(content);
+            //Debug.Log(i);
+            //Debug.Log(PlayerPrefs.GetString("Player_" + i));
+
+            string str = PlayerPrefs.GetString("Player_" + i);
+            if (string.IsNullOrEmpty(str) == true)
+            {
+                // Debug.Log("null");
+            }
+            else
+            {
+                //  Debug.Log("addedd");
+                //  Debug.Log(i);
+
+                userCollection.Add("Player_" + i);
+                //if not empty add to content
+                Transform content = Instantiate(
+                    childrenContentPrefab,
+                    new Vector3(0, 0, 0),
+                    Quaternion.identity
+                );
+                content.SetParent(transform);
+                content.localScale = new Vector3(1, 1, 1);
+                content.localPosition = new Vector3(0, 0, 0);
+                int l = i + 1;
+                content
+                    .transform.GetChild(0)
+                    .transform.GetChild(0)
+                    .GetComponent<TextMeshProUGUI>()
+                    .text = userCollection.Count.ToString();
+                listClones.Add(content);
+            }
         }
     }
+
     public void ClearChildrenAndDismiss()
     {
         for (int i = 0; i < listClones.Count; i++)
@@ -175,8 +227,9 @@ public class TransformController : MonoBehaviour
             Destroy(listClones[i].gameObject);
         }
         listClones.Clear();
-        transform.parent.transform.parent.transform.parent.GetComponent<Animator>().Play("Disappear2");
-
+        transform
+            .parent.transform.parent.transform.parent.GetComponent<Animator>()
+            .Play("Disappear2");
     }
 
     public void DismissPlayerSelect()
@@ -187,6 +240,8 @@ public class TransformController : MonoBehaviour
             Destroy(listClones[i].gameObject);
         }
         listClones.Clear();
-        transform.parent.transform.parent.transform.parent.GetComponent<Animator>().Play("Disappear2");
+        transform
+            .parent.transform.parent.transform.parent.GetComponent<Animator>()
+            .Play("Disappear2");
     }
 }
