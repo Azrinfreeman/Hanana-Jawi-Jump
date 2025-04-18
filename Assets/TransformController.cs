@@ -242,7 +242,7 @@ public class TransformController : MonoBehaviour
     {
         for (int i = 0; i < listClones.Count; i++)
         {
-            Debug.Log("wr");
+            //            Debug.Log("wr");
             Destroy(listClones[i].gameObject);
         }
         listClones.Clear();
