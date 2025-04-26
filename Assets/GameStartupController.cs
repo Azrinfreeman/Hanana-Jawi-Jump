@@ -47,11 +47,11 @@ public class GameStartupController : MonoBehaviour
             form.AddField("Playerid", PlayerPrefs.GetString("CurrentPlayerid_"));
             form.AddField(
                 "totalStars",
-                PlayerPrefs.GetInt("RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"))
+                PlayerPrefs.GetInt("StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"))
             );
             form.AddField(
                 "totalRounds",
-                PlayerPrefs.GetInt("StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"))
+                PlayerPrefs.GetInt("RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"))
             );
             form.AddField("deviceName", SystemInfo.deviceName);
 
