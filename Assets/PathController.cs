@@ -34,13 +34,13 @@ public class PathController : MonoBehaviour
     [Header("Time Remaining Transform")]
     public Transform timeToReach;
 
-
     public static PathController instance;
 
     private void Awake()
     {
         instance = this;
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +71,7 @@ public class PathController : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(false);
         }
     }
+
     public void SetFirstChildToLast(int listNum)
     {
         DisableAllCharacter();
@@ -268,18 +269,28 @@ public class PathController : MonoBehaviour
         }
         else
         {
-            //aaded
-            int roundCollected = PlayerPrefs.GetInt("RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"));
+            /*
+            int roundCollected = PlayerPrefs.GetInt(
+                "RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_")
+            );
             roundCollected += CollectionController.instance.rounds;
 
-            PlayerPrefs.SetInt("RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"), roundCollected);
+            PlayerPrefs.SetInt(
+                "RoundsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"),
+                roundCollected
+            );
 
-            int starsCollected = PlayerPrefs.GetInt("StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"));
+            int starsCollected = PlayerPrefs.GetInt(
+                "StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_")
+            );
             starsCollected += CollectionController.instance.stars;
 
-            PlayerPrefs.SetInt("StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"), starsCollected);
+            PlayerPrefs.SetInt(
+                "StarsCollected_" + PlayerPrefs.GetInt("CurrentPlayerNo_"),
+                starsCollected
+            );
 
-            //
+            */
             GameController.instance.endMenuScreen.gameObject.SetActive(true);
             GameController.instance.Bg.gameObject.SetActive(true);
             GameController.instance.isQuestionShowUp = true;
